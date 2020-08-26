@@ -32,7 +32,7 @@
         // this.load.image('logo', 'assets/sprites/phaser3-logo.png');
         // this.load.image('red', 'assets/particles/red.png');
         
-        this.load.setBaseURL('http://labs.phaser.io');
+        this.load.setBaseURL('https://raw.githubusercontent.com/jsoh88/findhiddenmask/master');
         this.load.image('bust-mask-1', 'bust-mask-1.svg');
         this.load.image('bust-mask-2', 'bust-mask-2.svg');
         this.load.image('bust-mask-3', 'bust-mask-3.svg');
@@ -42,8 +42,19 @@
     function create ()
     {
         // this.add.image(400, 300, 'sky');
-        this.add.image(400, 300, 'bust-mask-1');
-        this.add.image(400, 300, 'bust-mask-2');
+        // this.add.image(400, 300, 'bust-mask-1');
+        // this.add.image(400, 300, 'bust-mask-2');
+
+        var width = window.innerWidth * window.devicePixelRatio;
+        var height = window.innerHeight * window.devicePixelRatio;
+
+        for(var w = 0; w < width; w=w+50) {
+            for(var h = 0; h < height; h=h+50) {
+                sprite = this.add.image(w, h, 'bust-mask-1');
+                sprite.setScale(2);
+                sprite.setDisplaySize(100,200);
+            }
+        }
 
         // var particles = this.add.particles('red');
 
