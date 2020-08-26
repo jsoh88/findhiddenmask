@@ -37,6 +37,27 @@
         this.load.image('bust-mask-2', 'bust-mask-2.svg');
         this.load.image('bust-mask-3', 'bust-mask-3.svg');
         this.load.image('bust-mask-4', 'bust-mask-4.svg');
+        this.load.image('bust-mask-5', 'bust-mask-5.svg');
+        this.load.image('bust-mask-6', 'bust-mask-6.svg');
+        this.load.image('bust-mask-7', 'bust-mask-7.svg');
+        this.load.image('bust-mask-8', 'bust-mask-8.svg');
+        this.load.image('bust-mask-9', 'bust-mask-9.svg');
+        this.load.image('bust-mask-10', 'bust-mask-10.svg');
+        this.load.image('bust-mask-11', 'bust-mask-11.svg');
+        this.load.image('bust-mask-12', 'bust-mask-12.svg');
+        this.load.image('bust-mask-13', 'bust-mask-13.svg');
+        this.load.image('bust-mask-14', 'bust-mask-14.svg');
+        this.load.image('bust-mask-15', 'bust-mask-15.svg');
+        this.load.image('bust-mask-16', 'bust-mask-16.svg');
+        
+        // this.load.image('bust-mask-17', 'doc-nurse-1.svg');
+        // this.load.image('bust-mask-18', 'doc-nurse-2.svg');
+        // this.load.image('bust-mask-19', 'doc-nurse-3.svg');
+        // this.load.image('bust-mask-20', 'doc-nurse-4.svg');
+        // this.load.image('bust-mask-21', 'doc-nurse-5.svg');
+        // this.load.image('bust-mask-22', 'doc-nurse-6.svg');
+        // this.load.image('bust-mask-23', 'doc-nurse-7.svg');
+
     }
 
     function create ()
@@ -47,13 +68,23 @@
 
         var width = window.innerWidth * window.devicePixelRatio;
         var height = window.innerHeight * window.devicePixelRatio;
+        var scaleRatio = window.devicePixelRatio / 3;
+        var odd = 0;
+        
+        for(var w = 0; w < width; w=w+85) {
+            for(var h = 0; h < height; h=h+50+(odd%2*40)) {
+                console.log(`bust-mask-${Math.random()%15+1}`);
+                sprite = this.add.image(w, h, `bust-mask-${randomInt(1,16)}`);
+                sprite.setScale(scaleRatio);
 
-        for(var w = 0; w < width; w=w+50) {
-            for(var h = 0; h < height; h=h+50) {
-                sprite = this.add.image(w, h, 'bust-mask-1');
-                sprite.setScale(2);
-                sprite.setDisplaySize(100,200);
+                if(randomInt(1,2) == 1)
+                    sprite.flipX = true;
+
+                //sprite.tint = Math.random() * parseInt(ColorLuminance("FFFFFF", 0.2),16);
+                
+                // sprite.setDisplaySize(100,140);
             }
+            odd++;
         }
 
         // var particles = this.add.particles('red');
@@ -72,6 +103,29 @@
 
         // emitter.startFollow(logo);
     }
+
+    function randomInt(from, to) {
+        return Math.floor((Math.random()*(to - from + 1)) + from);
+    }
+
+    function ColorLuminance(hex, lum) {
+
+        // validate hex string
+        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+            hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+        }
+        lum = lum || 0;
+
+        // convert to decimal and change luminosity
+        var rgb = "", c, i;
+        for (i = 0; i < 3; i++) {
+            c = parseInt(hex.substr(i*2,2), 16);
+            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+            rgb += ("00"+c).substr(c.length);
+        }
+        return rgb;
+        }
     </script>
 
 </body>
