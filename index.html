@@ -1,132 +1,181 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- // <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.24.1/dist/phaser.min.js"></script>
 </head>
+<style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: #111;
+        color: #eee;
+        font: caption;
+    }
+
+    canvas {
+        /* And see postBoot() in JS */
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        color:aqua;
+        /* <https://caniuse.com/#feat=object-fit> */
+    }
+</style>
+
 <body>
 
     <script>
-    var config = {
-        type: Phaser.AUTO,
-        width: window.innerWidth * window.devicePixelRatio,
-        height: window.innerHeight * window.devicePixelRatio,
-        // physics: {
-        //     default: 'arcade',
-        //     arcade: {
-        //         gravity: { y: 200 }
-        //     }
-        // },
-        scene: {
-            preload: preload,
-            create: create
-        }
-    };
-
-    var game = new Phaser.Game(config);
-
-    function preload ()
-    {
-        //this.load.setBaseURL('http://labs.phaser.io');
-
-        // this.load.image('sky', 'assets/skies/space3.png');
-        // this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-        // this.load.image('red', 'assets/particles/red.png');
-        
-        this.load.setBaseURL('https://raw.githubusercontent.com/jsoh88/findhiddenmask/master');
-        this.load.image('bust-mask-1', 'bust-mask-1.svg');
-        this.load.image('bust-mask-2', 'bust-mask-2.svg');
-        this.load.image('bust-mask-3', 'bust-mask-3.svg');
-        this.load.image('bust-mask-4', 'bust-mask-4.svg');
-        this.load.image('bust-mask-5', 'bust-mask-5.svg');
-        this.load.image('bust-mask-6', 'bust-mask-6.svg');
-        this.load.image('bust-mask-7', 'bust-mask-7.svg');
-        this.load.image('bust-mask-8', 'bust-mask-8.svg');
-        this.load.image('bust-mask-9', 'bust-mask-9.svg');
-        this.load.image('bust-mask-10', 'bust-mask-10.svg');
-        this.load.image('bust-mask-11', 'bust-mask-11.svg');
-        this.load.image('bust-mask-12', 'bust-mask-12.svg');
-        this.load.image('bust-mask-13', 'bust-mask-13.svg');
-        this.load.image('bust-mask-14', 'bust-mask-14.svg');
-        this.load.image('bust-mask-15', 'bust-mask-15.svg');
-        this.load.image('bust-mask-16', 'bust-mask-16.svg');
-        
-        // this.load.image('bust-mask-17', 'doc-nurse-1.svg');
-        // this.load.image('bust-mask-18', 'doc-nurse-2.svg');
-        // this.load.image('bust-mask-19', 'doc-nurse-3.svg');
-        // this.load.image('bust-mask-20', 'doc-nurse-4.svg');
-        // this.load.image('bust-mask-21', 'doc-nurse-5.svg');
-        // this.load.image('bust-mask-22', 'doc-nurse-6.svg');
-        // this.load.image('bust-mask-23', 'doc-nurse-7.svg');
-
-    }
-
-    function create ()
-    {
-        // this.add.image(400, 300, 'sky');
-        // this.add.image(400, 300, 'bust-mask-1');
-        // this.add.image(400, 300, 'bust-mask-2');
-
-        var width = window.innerWidth * window.devicePixelRatio;
-        var height = window.innerHeight * window.devicePixelRatio;
-        var scaleRatio = window.devicePixelRatio / 3;
-        var odd = 0;
-        
-        for(var w = 0; w < width; w=w+85) {
-            for(var h = 0; h < height; h=h+50+(odd%2*40)) {
-                console.log(`bust-mask-${Math.random()%15+1}`);
-                sprite = this.add.image(w, h, `bust-mask-${randomInt(1,16)}`);
-                sprite.setScale(scaleRatio);
-
-                if(randomInt(1,2) == 1)
-                    sprite.flipX = true;
-
-                //sprite.tint = Math.random() * parseInt(ColorLuminance("FFFFFF", 0.2),16);
-                
-                // sprite.setDisplaySize(100,140);
+        var config = {
+            type: Phaser.AUTO,
+            width: window.innerWidth * window.devicePixelRatio,
+            height: window.innerHeight * window.devicePixelRatio,
+            // physics: {
+            //     default: 'arcade',
+            //     arcade: {
+            //         gravity: { y: 200 }
+            //     }
+            // },
+            scene: {
+                preload: preload,
+                create: create
+            },
+            callbacks: {
+                postBoot: function (game) {
+                    // In v3.15, you have to override Phaser's default styles
+                    game.canvas.style.width = '100%';
+                    game.canvas.style.height = '100%';
+                }
             }
-            odd++;
+        };
+
+        var game = new Phaser.Game(config);
+
+        function preload() {
+            //this.load.setBaseURL('http://labs.phaser.io');
+
+            // this.load.image('sky', 'assets/skies/space3.png');
+            // this.load.image('logo', 'assets/sprites/phaser3-logo.png');
+            // this.load.image('red', 'assets/particles/red.png');
+
+            this.load.setBaseURL('https://raw.githubusercontent.com/jsoh88/findhiddenmask/master');
+
+            for (var i = 1; i <= 150; i++) {
+                this.load.image(`stand_mask_${i}`,
+                    `https://appdep88.s3.ap-northeast-2.amazonaws.com/stand_mask_${i}.png`);
+            }
         }
 
-        // var particles = this.add.particles('red');
+        function create() {
+            // this.add.image(400, 300, 'sky');
+            // this.add.image(400, 300, 'bust-mask-1');
+            // this.add.image(400, 300, 'bust-mask-2');
+            // this.backgroundColor = "#4488AA";
+            
 
-        // var emitter = particles.createEmitter({
-        //     speed: 100,
-        //     scale: { start: 1, end: 0 },
-        //     blendMode: 'ADD'
-        // });
+            var width = window.innerWidth * window.devicePixelRatio;
+            var height = window.innerHeight * window.devicePixelRatio;
+            var scaleRatio = window.devicePixelRatio / 3;
+            var odd = 0;
 
-        // var logo = this.physics.add.image(400, 100, 'logo');
+            var camera = this.cameras.add(0, 0, width, height);
+            camera.zoom = 1;
+            camera.setBackgroundColor('#76aafe');
 
-        // logo.setVelocity(100, 200);
-        // logo.setBounce(1, 1);
-        // logo.setCollideWorldBounds(true);
+            var mode = {
+                "widthStart": 100,
+                "widthEnd": 170,
+                "widthInterval": 220,
+                "heightStart": 400,
+                "heightEnd": 250,
+                "heightInterval": 250,
+                "nomaskCount": 5
+            };
 
-        // emitter.startFollow(logo);
-    }
+            for (var w = mode.widthStart; w < width; w = w + mode.widthInterval) {
 
-    function randomInt(from, to) {
-        return Math.floor((Math.random()*(to - from + 1)) + from);
-    }
+                for (var h = mode.heightStart; h < height; h = h + mode.heightInterval + (odd % 2 * 40)) {
+                    // console.log(`stand_mask_${Math.random()%15+1}`);
+                    sprite = this.add.image(w, h, `stand_mask_${randomInt(1,150)}`);
+                    // sprite.witdh = 500;
+                    // sprite.height = 500;
+                    sprite.setScale(scaleRatio*1.75);
+                    sprite.setInteractive();
+                    sprite.on('clicked', clickHandler, this);
 
-    function ColorLuminance(hex, lum) {
+                    if (randomInt(1, 2) == 1)
+                        sprite.flipX = true;
 
-        // validate hex string
-        hex = String(hex).replace(/[^0-9a-f]/gi, '');
-        if (hex.length < 6) {
-            hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+                    // sprite.tint = Math.random() * parseInt(ColorLuminance("FFFFFF", 0.2),16);
+                    // sprite.setDisplaySize(100,140);
+                }
+
+                odd++;
+            }
+
+            this.input.on('gameobjectup', function (pointer, gameObject)
+            {
+                gameObject.emit('clicked', gameObject);
+            }, this);
+
+            // var particles = this.add.particles('red');
+
+            // var emitter = particles.createEmitter({
+            //     speed: 100,
+            //     scale: { start: 1, end: 0 },
+            //     blendMode: 'ADD'
+            // });
+
+            // var logo = this.physics.add.image(400, 100, 'logo');
+
+            // logo.setVelocity(100, 200);
+            // logo.setBounce(1, 1);
+            // logo.setCollideWorldBounds(true);
+
+            // emitter.startFollow(logo);
         }
-        lum = lum || 0;
 
-        // convert to decimal and change luminosity
-        var rgb = "", c, i;
-        for (i = 0; i < 3; i++) {
-            c = parseInt(hex.substr(i*2,2), 16);
-            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-            rgb += ("00"+c).substr(c.length);
+        function randomInt(from, to) {
+            return Math.floor((Math.random() * (to - from + 1)) + from);
         }
-        return rgb;
+
+        function ColorLuminance(hex, lum) {
+
+            // validate hex string
+            hex = String(hex).replace(/[^0-9a-f]/gi, '');
+            if (hex.length < 6) {
+                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+            }
+            lum = lum || 0;
+
+            // convert to decimal and change luminosity
+            var rgb = "",
+                c, i;
+            for (i = 0; i < 3; i++) {
+                c = parseInt(hex.substr(i * 2, 2), 16);
+                c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+                rgb += ("00" + c).substr(c.length);
+            }
+            return rgb;
+        }
+
+        function clickHandler (box)
+        {
+            // alive--;
+
+            box.off('clicked', clickHandler);
+            box.input.enabled = false;
+            box.setVisible(false);
         }
     </script>
 
 </body>
+
 </html>
